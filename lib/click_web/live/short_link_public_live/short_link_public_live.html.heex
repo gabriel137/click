@@ -1,0 +1,23 @@
+<%= live_component(ClickWeb.ShortLinkPublicLive.FormComponent, id: :stateful, action: @live_action) %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Shortened URL</th>
+      <th>Hits</th>
+    </tr>
+  </thead>
+  <tbody id="short_links" phx-update="prepend" phx-hook="ShortLinkTable">
+    <%= for short_link <- @short_links do %>
+      <tr id={"short_link-#{short_link.id}"}>
+        <td style="overflow-x:auto;max-width:33vw"><%= short_link.url %></td>
+        <% shortened_url = "#{@app_url}/#{short_link.key}" %>
+        <td style="overflow-x:auto"><%= link shortened_url, to: shortened_url, target: "_blank" %></td>
+        <td><%= short_link.hit_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "Admin", to: Routes.short_link_index_path(@socket, :index) %></span>
