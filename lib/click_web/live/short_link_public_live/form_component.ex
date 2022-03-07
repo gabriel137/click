@@ -26,11 +26,11 @@ defmodule ClickWeb.ShortLinkPublicLive.FormComponent do
           phx-change="validate"
           phx-submit="save">
 
-          <%= text_input f, :url, phx_debounce: "300", placeholder: "Shorten your link" %>
+          <%= text_input f, :url, phx_debounce: "300", placeholder: "Insira seu link aqui.." %>
           <%= error_tag f, :url %>
 
           <div>
-            <%= submit "Shorten", phx_disable_with: "Processing..." %>
+            <%= submit "Encurtar", phx_disable_with: "Carregando..." %>
           </div>
         </.form>
       </div>
