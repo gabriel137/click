@@ -7,6 +7,7 @@ defmodule Click.ShortLinks do
   alias Click.Repo
 
   alias Click.ShortLinks.ShortLink
+  alias Click.ShortLinks.PubSub
 
   def get_short_link_by_key(key), do: Repo.get_by(ShortLink, key: key)
 
@@ -84,7 +85,7 @@ defmodule Click.ShortLinks do
     short_link
     |> ShortLink.changeset(attrs)
     |> Repo.update()
-    # |> PubSub.broadcast_record(:short_link_updated) # TODO: uncomment later
+    |> PubSub.broadcast_record(:short_link_updated) #
   end
 
   def increment_hit_count(short_link) do
@@ -107,7 +108,7 @@ defmodule Click.ShortLinks do
     short_link
     |> ShortLink.changeset(attrs)
     |> Repo.update()
-    # |> PubSub.broadcast_record(:short_link_updated)
+    |> PubSub.broadcast_record(:short_link_updated)
   end
 
   @doc """
@@ -124,7 +125,7 @@ defmodule Click.ShortLinks do
   """
   def delete_short_link(%ShortLink{} = short_link) do
     Repo.delete(short_link)
-    # |> PubSub.broadcast_record(:short_link_deleted)
+    |> PubSub.broadcast_record(:short_link_deleted)
   end
 
   @doc """
