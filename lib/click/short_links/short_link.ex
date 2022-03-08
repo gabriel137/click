@@ -14,6 +14,12 @@ defmodule Click.ShortLinks.ShortLink do
   def changeset(short_link, attrs) do
     short_link
     |> cast(attrs, [:key, :url, :hit_count])
-    |> validate_required([:url])
+    |> validate_required([:url], message: "O campo não pode estar vazio.")
+    |> case do
+      %{valid?: false, errors: [url: {error, _}]} = changeset when error == "is invalid" ->
+        %{changeset | errors: [url: {"O URL é inválido", [type: EctoFields.URL, validation: :cast]}]}
+
+      changeset -> changeset
+    end
   end
 end
